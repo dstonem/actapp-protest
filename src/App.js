@@ -1,24 +1,18 @@
 import React from 'react';
-import logo from './logo.svg';
+import {eventData} from './eventData';
+import EventFeed from './components/EventFeed'
+import Event from './components/Event'
+import EventCreator from './components/EventCreator'
 import './App.css';
 
 function App() {
+  console.log(eventData[0].location)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <EventFeed>
+        {eventData.map((event,idx) => <Event key={idx} img={event.img} title={event.title} description={event.description} starttime={event.starttime} endtime={event.endtime} date={event.date} center={event.location} address={event.address} lat={event.location.lat} lng={event.location.lng}/>)}
+      </EventFeed>
+      <EventCreator />
     </div>
   );
 }
