@@ -2,19 +2,37 @@
   text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 .App-link {
   color: #61dafb;
+}
+
+body {
+  width:100%;
+}
+
+.headerNav{
+  position:fixed;
+  top:0px;
+  right:0;
+  left:0;
+  height:50px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+  padding:5px;
+  background-color: white;
+  border-bottom: 1px solid #eee;
+  z-index:10000;
+  transition:1s;
+}
+
+.headerNav a {
+  margin: 5px 10px 0px;
+}
+
+.main {
+  overflow:auto;
 }
 
 /* EVENT FEED */
@@ -22,27 +40,42 @@
   display:flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  margin-top: 65px;
+  width:100%;
 }
 
 .event-card {
   box-shadow:2px 2px 5px #444;
   transition:0.3s;
   display:flex;
+  justify-content: space-evenly;
+  flex-wrap:wrap;
   margin:10px 0;
-  padding: -10px 10px;
-  width: 375px;
-  min-height:375px;
+  /* padding: -10px 10px; */
+  width: 100%;
+  max-width: 375px;
+  height:375px;
 }
 
 .event-card:hover {
   box-shadow:3px 3px 10px #444;
 }
 
-.event-card:after {
+/* .event-card:after {
   content: '';
   position: relative;
   top: 0; left: 0; bottom: 0; right: 0;
   box-shadow: inset 0px 0px 150px black;
+} */
+
+.event-img-container {
+  width:50%;
+  height:50%;
+  overflow: hidden;
+}
+
+.event-img {
+  width:100%;
 }
 
 .event-card-title-container {
@@ -51,24 +84,8 @@
   flex-direction: column;
   align-items:flex-end;
   width:50%;
-  left:50%;
   text-align:right;
-  margin-right:5px;
-}
-
-.event-info-container {
-  position: relative;
-  display:flex;
-  align-items:flex-end;
-  width:50%;
-  right:50%;
-  bottom:20px;
-  text-align:right;
-  margin:0 10px 0 15px;
-}
-
-.event-info-text-container {
-  
+  /* margin-right:5px; */
 }
 
 button {
@@ -84,3 +101,215 @@ button {
 button:active {
   box-shadow: none;
 }
+
+.event-info-container {
+  position: relative;
+  display:flex;
+  align-items:flex-end;
+  width:50%;
+  bottom:20px;
+  text-align:right;
+  /* margin:0 10px 0 15px; */
+}
+
+.map-container {
+  width:50%;
+  margin:-20px 0 25px 0px;
+}
+
+/* Event Details Page
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.event-details-page-container {
+  position:sticky;
+  top:60px;
+  width:100%;
+  height:100%;
+  background-color:#eee;
+  box-shadow: 2px 2px 5px black;
+  animation: growUp 0.5s;
+  transition:0.5s;
+  z-index:10001;
+}
+
+@media (min-width:768px) {
+  .event-details-page-container {
+    position:fixed;
+  }
+}
+
+@keyframes growUp {
+  from {
+    height:0;
+  }
+}
+
+.event-details-button-div button {
+  margin:10px;
+}
+
+/* Forms
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+  input[type="email"],
+  input[type="number"],
+  input[type="search"],
+  input[type="text"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="password"],
+  textarea,
+  select {
+    height: 38px;
+    padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+    background-color: #fff;
+    border: 1px solid #D1D1D1;
+    border-radius: 4px;
+    box-shadow: none;
+    box-sizing: border-box; }
+  /* Removes awkward default styles on some inputs for iOS */
+  input[type="email"],
+  input[type="number"],
+  input[type="search"],
+  input[type="text"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="password"],
+  textarea {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none; }
+  textarea {
+    min-height: 65px;
+    padding-top: 6px;
+    padding-bottom: 6px; }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #33C3F0;
+    outline: 0; }
+  label,
+  legend {
+    display: block;
+    margin-bottom: .5rem;
+    font-weight: 600; }
+  fieldset {
+    padding: 0;
+    border-width: 0; }
+  input[type="checkbox"],
+  input[type="radio"] {
+    display: inline; }
+  label > .label-body {
+    display: inline-block;
+    margin-left: .5rem;
+    font-weight: normal; }
+
+.green {
+  color: rgb(55, 182,53);
+}
+
+.white-on-black {
+  color:white;
+  background-color: black;
+}
+
+.form-inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-inputs1 {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.form-switch {
+  display: inline-block;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  margin: 1% 0% 0% 0%;
+  max-width: 30vh;
+  width: 100%;
+}
+
+.form-switch i {
+  position: relative;
+  display: inline-block;
+ margin-right: .5rem;
+  width: 46px;
+  height: 26px;
+  background-color: #e6e6e6;
+  border-radius: 23px;
+  vertical-align: text-bottom;
+  transition: all 0.3s linear;
+}
+
+.form-switch i::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 42px;
+  height: 22px;
+  background-color: #fff;
+  border-radius: 11px;
+  transform: translate3d(2px, 2px, 0) scale3d(1, 1, 1);
+  transition: all 0.25s linear;
+}
+
+.form-switch i::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  background-color: #fff;
+  border-radius: 11px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24);
+  transform: translate3d(2px, 2px, 0);
+  transition: all 0.2s ease-in-out;
+}
+
+.form-switch:active i::after {
+  width: 28px;
+  transform: translate3d(2px, 2px, 0);
+}
+
+.form-switch:active input:checked + i::after { transform: translate3d(16px, 2px, 0); }
+
+.form-switch input { display: none; }
+
+.form-switch input:checked + i { 
+  background-color: #000000; 
+  box-shadow: 0 2px 2px 1px rgba(255, 255, 255, 0.603);
+}
+
+.form-switch input:checked + i::before { transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0); }
+
+.form-switch input:checked + i::after { transform: translate3d(22px, 2px, 0); }
+
+/* Spacing
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+  button,
+  .button {
+    margin-bottom: 1rem; }
+  input,
+  textarea,
+  select,
+  fieldset {
+    margin-bottom: 1.5rem; }
+  pre,
+  blockquote,
+  dl,
+  figure,
+  table,
+  p,
+  ul,
+  ol,
+  form {
+    margin-bottom: 2.5rem; }

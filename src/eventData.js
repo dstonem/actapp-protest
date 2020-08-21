@@ -1,6 +1,6 @@
 export const eventData = [
     {
-        title:"event 1",
+        title:"March for Breonna Taylor",
         img:"logo192.png",
         description:"protest the defunding of the usps",
         starttime:"09:00:00",
@@ -14,7 +14,7 @@ export const eventData = [
         }
     },
     {
-        title:"event 2",
+        title:"Urban Farming 101",
         img:"IMG_5011.JPG",
         description:"protest the defunding of the usps",
         starttime:"09:00:00",
@@ -28,7 +28,7 @@ export const eventData = [
         }
     },
     {
-        title:"event 3",
+        title:"Bike Ride in Solidarity with BLM",
         img:"fist.jpg",
         description:"protest the defunding of the usps",
         starttime:"09:00:00",
@@ -42,7 +42,7 @@ export const eventData = [
         }
     },
     {
-        title:"event 4",
+        title:"Write Your Representatives to Support the USPS",
         img:"fire.jpg",
         description:"protest the defunding of the usps",
         starttime:"09:00:00",
