@@ -121,6 +121,7 @@ button:active {
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 .event-details-page-container {
+  background:linear-gradient(to bottom, #eee, #ABAEB3);
   position:sticky;
   top:60px;
   width:100%;
@@ -130,6 +131,10 @@ button:active {
   animation: growUp 0.5s;
   transition:0.5s;
   z-index:10001;
+}
+
+.event-details-header {
+  display:flex;
 }
 
 @media (min-width:768px) {
@@ -146,6 +151,12 @@ button:active {
 
 .event-details-button-div button {
   margin:10px;
+  z-index:10002;
+}
+
+.map-container-details {
+  width:50%;
+  margin:13px 0;
 }
 
 /* Forms

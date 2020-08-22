@@ -31,7 +31,7 @@ const useFetch = (_url) => {
     };
 
 
-    return { loading,error, data, fetchData, setUrl };
+    return [ loading,error, data, fetchData, setUrl ];
 
 };
 

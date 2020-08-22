@@ -11,7 +11,17 @@ export const eventData = [
         location:{
             lat:33.754698,
             lng:-84.4141987
-        }
+        },
+        policies:[
+            {
+                title:"Augmented Training for Police Officers",
+                description:"Police officers should be required to receive at least 1000 hours of training from training programs reviewed by a committee of veteran police officers with good records to be approved for large government contracts to continue training."
+            },
+            {
+                title:"End Qualified Immunity",
+                description:"Arrest those MFers" 
+            }
+        ]
     },
     {
         title:"Urban Farming 101",
@@ -25,7 +35,17 @@ export const eventData = [
         location:{
             lat:33.754698,
             lng:-84.4141987
-        }
+        },
+        policies:[
+            {
+                title:"Augmented Training for Police Officers",
+                description:"Police officers should be required to receive at least 1000 hours of training from training programs reviewed by a committee of veteran police officers with good records to be approved for large government contracts to continue training."
+            },
+            {
+                title:"End Qualified Immunity",
+                description:"Arrest those MFers" 
+            }
+        ]
     },
     {
         title:"Bike Ride in Solidarity with BLM",
@@ -39,7 +59,17 @@ export const eventData = [
         location:{
             lat:33.754698,
             lng:-84.4141987
-        }
+        },
+        policies:[
+            {
+                title:"Augmented Training for Police Officers",
+                description:"Police officers should be required to receive at least 1000 hours of training from training programs reviewed by a committee of veteran police officers with good records to be approved for large government contracts to continue training."
+            },
+            {
+                title:"End Qualified Immunity",
+                description:"Arrest those MFers" 
+            }
+        ]
     },
     {
         title:"Write Your Representatives to Support the USPS",
@@ -53,6 +83,16 @@ export const eventData = [
         location:{
             lat:33.754698,
             lng:-84.4141987
-        }
+        },
+        policies:[
+            {
+                title:"Augmented Training for Police Officers",
+                description:"Police officers should be required to receive at least 1000 hours of training from training programs reviewed by a committee of veteran police officers with good records to be approved for large government contracts to continue training."
+            },
+            {
+                title:"End Qualified Immunity",
+                description:"Arrest those MFers" 
+            }
+        ]
     }
 ]

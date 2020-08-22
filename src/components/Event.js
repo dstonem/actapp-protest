@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import GMap from "./Map"
 import EventDetails from "./EventDetails"
 
-function Event({title,img,description,imgSrc,starttime,endtime,date,center,address,lat,lng,attendees}) {
+function Event({title,img,description,starttime,endtime,date,center,address,lat,lng,attendees,policies}) {
     //move these hooks into another file -- look at todoPlus and ask Clint how to do that the right way
     const [signedIn,setSignedIn] = useState(true)
     
@@ -46,7 +46,7 @@ function Event({title,img,description,imgSrc,starttime,endtime,date,center,addre
     }
     
     return (
-        details ? <EventDetails handleClick={showEventDetails} addAttend={addAttend} attendance={attendance} userAttending={userAttending} img={img} title={title}/> :
+        details ? <EventDetails handleClick={showEventDetails} addAttend={addAttend} attendance={attendance} userAttending={userAttending} img={img} title={title} description={description} policies={policies} center={center} lat={lat} lng={lng} mapStyles={mapStyles}/> :
         <div className="event-card" style={style}>
             <div className="event-img-container">
                 <img src={img} className="event-img" />
