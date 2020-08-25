@@ -13,6 +13,7 @@ const useFetch = (_url) => {
             setLoading(true);
             fetch(url)
             .then(response=>{
+                console.log(response.status)
                 if(response.status === 200){
                    return response.json()
                 } else {
@@ -25,11 +26,11 @@ const useFetch = (_url) => {
                 setLoading(false);
             })
         } catch (error) {
+            console.log(error)
             setError(error);
            //throw error;
         }
     };
-
 
     return [ loading,error, data, fetchData, setUrl ];
 
