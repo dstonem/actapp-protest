@@ -1,11 +1,22 @@
-import React,{useState} from "react"
+import React,{useState,useEffect} from "react"
+import useFetch from '../hooks/useFetch'
 import Policy from "./Policy"
 import GMap from "./Map"
 import EventPageFeed from './EventPageFeed'
 import {eventData} from '../eventData'
 import Post from './posts/Post'
 
-function EventDetails({handleClick,addAttend,attendance,userAttending,title,img,description,policies,center,mapStyles,lat,lng}) {
+function EventDetails({handleClick,addAttend,attendance,userAttending,title,img,description,center,mapStyles,lat,lng,policies}) {
+
+    const [loading,error,data,fetchData,setUrl] = useFetch('http://localhost:3333/posts')
+  
+    useEffect(()=>{
+        if(!data){
+        fetchData()
+        }
+    },[])
+    
+    if(!data) return <div>loading...</div>
 
     return(
         <div className="event-details-page-container">
@@ -39,7 +50,7 @@ function EventDetails({handleClick,addAttend,attendance,userAttending,title,img,
             <h2>Attendance: {attendance >= 50 ? attendance : "<50"}</h2> 
             <EventPageFeed>
                 {/* except this would be mapping the return of the select * from posts where event_id = __ (need to include the post_id somewhere in this component, then change the props of Post) */}
-                {eventData.map(event => <Post username={event.userName} img={event.img} text={event.description}/>)}
+                {data.map((post,idx) => <Post key={idx} user={post.userName} postImg={post.picurl} postText={post.body} causes={post.causes} action={post.action} />)}
             </EventPageFeed>
             <div className="event-details-button-div">
                 <button onClick={handleClick}>Back to Events</button>

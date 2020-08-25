@@ -1,8 +1,19 @@
-import React, {useState} from "react"
+import React,{useState,useEffect} from "react"
+import useFetch from '../hooks/useFetch'
 import GMap from "./Map"
 import EventDetails from "./EventDetails"
 
-function Event({title,img,description,starttime,endtime,date,center,address,lat,lng,attendees,policies}) {
+function Event({title,img,description,starttime,endtime,date,center,address,lat,lng,attendees}) {
+    const [loading,error,data,fetchData,setUrl] = useFetch('http://localhost:3333/policies')
+  
+    useEffect(()=>{
+        if(!data){
+        fetchData()
+        }
+    },[])
+
+    
+    
     //move these hooks into another file -- look at todoPlus and ask Clint how to do that the right way
     const [signedIn,setSignedIn] = useState(true)
     
@@ -44,9 +55,11 @@ function Event({title,img,description,starttime,endtime,date,center,address,lat,
     const showEventDetails = () => {
         setDetails(!details)
     }
+
+    if(!data) return <div>loading...</div>
     
     return (
-        details ? <EventDetails handleClick={showEventDetails} addAttend={addAttend} attendance={attendance} userAttending={userAttending} img={img} title={title} description={description} policies={policies} center={center} lat={lat} lng={lng} mapStyles={mapStyles}/> :
+        details ? <EventDetails handleClick={showEventDetails} addAttend={addAttend} attendance={attendance} userAttending={userAttending} img={img} title={title} description={description} policies={data} center={center} lat={lat} lng={lng} mapStyles={mapStyles}/> :
         <div className="event-card" style={style}>
             <div className="event-img-container">
                 <img src={img} className="event-img" />
