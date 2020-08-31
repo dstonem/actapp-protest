@@ -1,21 +1,25 @@
 import React,{useState,useEffect} from "react"
+import {
+    Route,
+    NavLink,
+    HashRouter,
+    Redirect
+  } from "react-router-dom";
+import {useParams} from 'react-router'
 import useFetch from '../hooks/useFetch'
 import GMap from "./Map"
 import EventDetails from "./EventDetails"
+import ProtectedRoute from './ProtectedRoute'
+// import {addAttend,attendance,userAttending} from './Attendees'
 
-function Event({title,img,description,starttime,endtime,date,center,address,lat,lng,attendees}) {
-    const [loading,error,data,fetchData,setUrl] = useFetch('http://localhost:3333/policies')
+function Event({user,id,setUser,title,img,description,starttime,endtime,date,center,address,lat,lng,attendees}) {
+    const [loading,error,data,fetchData,setUrl] = useFetch('/policies')
   
     useEffect(()=>{
         if(!data){
         fetchData()
         }
     },[])
-
-    
-    
-    //move these hooks into another file -- look at todoPlus and ask Clint how to do that the right way
-    const [signedIn,setSignedIn] = useState(true)
     
     //move these styles to the css file
     const style = {
@@ -31,35 +35,29 @@ function Event({title,img,description,starttime,endtime,date,center,address,lat,
         borderRadius:"50%",
         marginLeft:"15px"
     }
-
-    const [attendance,setAttendance] = useState(0)//change the zero to whatever the count(*) of this event is in the DB
-    const [userAttending,setUserAttending] = useState(false)
-
-    const addAttend = () => {
-        if(!signedIn){/* route to login */console.log('you must log in')} 
-        else if(/* signedIn && there is no row with the user_id and the event_id */ !userAttending) {
-            setUserAttending(true)
-            setAttendance(attendance + 1)
-        } else {
-            setUserAttending(false)
-            setAttendance(attendance - 1)
-            console.log('you are already attending')
-        }
-        //really this would be to add a row with the user_id and the event_id to the "attendees" table in SQL
-        
-        //another function adds the event to the user's homescreen -- after the event, the followup action is added to the user's homescreen as well
-    }
-
+    
     const [details,setDetails] = useState(false)
+    let [eventId,setEventId] = useState(id) 
 
-    const showEventDetails = () => {
+    const showEventDetails = (evt) => {
         setDetails(!details)
+        setEventId(id)
+        console.log(eventId)
     }
+    console.log(id)
+    
+       
+    let eventDetails =<Redirect to='/events/:id'><EventDetails handleClick={showEventDetails} id={id} user={user} setUser={setUser} img={img} title={title} description={description} policies={data} center={center} lat={lat} lng={lng} mapStyles={mapStyles}/></Redirect> 
 
     if(!data) return <div>loading...</div>
-    
+    //is this the right place to put match.params? yes i think so
     return (
-        details ? <EventDetails handleClick={showEventDetails} addAttend={addAttend} attendance={attendance} userAttending={userAttending} img={img} title={title} description={description} policies={data} center={center} lat={lat} lng={lng} mapStyles={mapStyles}/> :
+        <HashRouter>
+            {/* could change the line below to pass STATE through react routers as props below like the useLocation() example on this webpage: https://dev.to/finallynero/hooks-introduced-in-react-router-v5-1-7g8 */}
+        <ProtectedRoute path = '/events/:id' id={eventId} loggedIn={user} user={user} component={EventDetails}></ProtectedRoute>
+        
+        {details ? <EventDetails handleClick={showEventDetails} id={eventId} user={user} setUser={setUser} img={img} title={title} description={description} policies={data} center={center} lat={lat} lng={lng} mapStyles={mapStyles}/>
+        :
         <div className="event-card" style={style}>
             <div className="event-img-container">
                 <img src={img} className="event-img" />
@@ -67,7 +65,9 @@ function Event({title,img,description,starttime,endtime,date,center,address,lat,
 
             <div className="event-card-title-container">
                 <h2>{title}</h2>
-                <button onClick={showEventDetails}>Learn More & Attend</button>
+                {/* <NavLink to='/events/:id'> */}
+                    <button onClick={showEventDetails}>Learn More & Attend</button>
+                {/* </NavLink> */}
             </div>
     
             <div className="event-info-container">
@@ -77,16 +77,17 @@ function Event({title,img,description,starttime,endtime,date,center,address,lat,
                     <p>{date}</p>
                 </div>
             </div>
-            <div className="map-container">
+            {/* <div className="map-container">
                 <GMap 
                         initialCenter={center}
                         styles={mapStyles}
                         lat={lat}
                         lng={lng}
                 />
-            </div>
+            </div> */}
             
-        </div>
+        </div>}
+        </HashRouter>
     )
 }
 

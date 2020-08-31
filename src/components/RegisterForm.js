@@ -1,13 +1,20 @@
 import React from "react"
+import {
+    Route,
+    NavLink,
+    HashRouter
+  } from "react-router-dom";
 
-function LoginForm() {
+function RegisterForm({user,setUser}) {
+    
     return(
+        <HashRouter>
         <div id="r-container">
             <div className="register-content">
             <div className="header">
                 <h1><span className="green">act</span>app<span className="white-on-black">protest</span></h1>
             </div>
-                    <form action="/login/register" method="post">
+                    <form action="/login/register" method="POST">
                         <fieldset>
                             <legend className="registertext">Register</legend>
                             <div className="input-wrapper">
@@ -27,16 +34,18 @@ function LoginForm() {
                                 </div>
                             </div>
                             <button type="submit" type="text" value="submit" className="bttn">Sign Up</button>
+                            {/* {user ? <NavLink to="/Survey">Continue</NavLink> : null} */}
                         </fieldset>
                     </form>
             </div>
                 <div className="lr-link">
                     <div className="s-part">
-                        Already Have an Account?<a href="/login"> Login Here!</a>
+                        Already Have an Account?<NavLink to="/LoginForm" onLogIn={() => setUser(true)}> Login Here!</NavLink>
                     </div>
                 </div>
         </div>
+        </HashRouter>
     )
 }
 
-export default LoginForm
+export default RegisterForm

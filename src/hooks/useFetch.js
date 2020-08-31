@@ -1,17 +1,17 @@
 //DONT MESS WITH THIS IT WORKS PROPERLY NOW
 import { useState } from "react";
 
-const useFetch = (_url) => {
+const useFetch = (_url,method='GET') => {
 
     const [error,setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [data,setData] = useState(null);
     const [url, setUrl] = useState(_url);
 
-    const fetchData =()=> {
+    const fetchData =(body)=> {
         try {
             setLoading(true);
-            fetch(url)
+            fetch(url,{method,body,headers: {'Content-Type': 'application/json'}})
             .then(response=>{
                 console.log(response.status)
                 if(response.status === 200){

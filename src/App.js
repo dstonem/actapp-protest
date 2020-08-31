@@ -1,37 +1,61 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 // import {eventData} from './eventData';
 import useFetch from './hooks/useFetch'
 import Header from './components/Header'
-import EventFeed from './components/EventFeed'
-import Event from './components/Event'
 import EventCreator from './components/EventCreator'
+import EventFeedContainer from './components/EventFeedContainer'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
 import './App.css';
+import UserProfile from './components/UserProfile';
+import Survey from './components/Survey'
+import EventDetails from './components/EventDetails'
+import {
+  Route,
+  NavLink,
+  HashRouter
+} from "react-router-dom";
+import ProtectedRoute from './components/ProtectedRoute'
 
 const App = () => {
-  const [loading,error,data,fetchData,setUrl] = useFetch('http://localhost:3333/events')
+  const [loading,error,data,fetchData,setUrl] = useFetch('/user')
   
+  const [user,setUser] = useState(null)
+  const [userInfo,setUserInfo] = useState(null)
+
   useEffect(()=>{
-    if(!data){
+    if(!data && user){
       fetchData()
     }
-  },[])
-  
-  if(!data) return <div>loading...</div>
-  
+    setUserInfo(data)
+  },[user])
+
+  console.log(userInfo)
+   
   return (
-    <div className="App">
-      <Header />
-      <div className="main">
-        <EventFeed>
-          {data.map((event,idx) => <Event key={idx} img={event.pic} title={event.title} description={event.description} starttime={event.starttime} endtime={event.endtime} date={event.eventDate} center={event.location} address={event.address} lat={event.location.lat} lng={event.location.lng} />)}
-        </EventFeed>
-        <EventCreator />
-        <LoginForm />
-        <RegisterForm />
+    <HashRouter>
+      <div className="App">
+        <Header />
+        <div className="main">
+    
+          <Route exact path='/LoginForm'>
+            <LoginForm onLogIn={() => setUser(true)} user={user}/>
+          </Route>
+          
+          <Route exact path='/EventCreator' component={EventCreator}></Route>
+          
+          <Route exact path='/EventFeedContainer'>
+            <EventFeedContainer user={user} setUser={setUser}/>
+          </Route>
+          <Route path='/Survey'>
+            <Survey onSubmit={() => setUserInfo(userInfo)} />
+          </Route>
+          
+          <Route exact path='/RegisterForm' user={user} setUser={setUser} component={RegisterForm}></Route>
+          <ProtectedRoute exact path='/UserProfile' loggedIn={user} user={user} component={UserProfile}></ProtectedRoute>
+        </div>
       </div>
-    </div>
+    </HashRouter>
   );
 }
 
