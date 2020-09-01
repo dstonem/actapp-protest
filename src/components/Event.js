@@ -12,7 +12,26 @@ import EventDetails from "./EventDetails"
 import ProtectedRoute from './ProtectedRoute'
 // import {addAttend,attendance,userAttending} from './Attendees'
 
-function Event({user,id,setUser,title,img,description,starttime,endtime,date,center,address,lat,lng,attendees}) {
+function Event({user,id,setUser,event:
+        {
+            pic,
+            cause,
+            title,
+            description,
+            starttime,
+            endtime,
+            date,
+            center,
+            address,
+            lat,
+            lng,
+            attendees,
+            action1,
+            action2,
+            action3
+        }
+    }) {
+    const img = pic
     const [loading,error,data,fetchData,setUrl] = useFetch('/policies')
   
     useEffect(()=>{
@@ -47,7 +66,7 @@ function Event({user,id,setUser,title,img,description,starttime,endtime,date,cen
     console.log(id)
     
        
-    let eventDetails =<Redirect to='/events/:id'><EventDetails handleClick={showEventDetails} id={id} user={user} setUser={setUser} img={img} title={title} description={description} policies={data} center={center} lat={lat} lng={lng} mapStyles={mapStyles}/></Redirect> 
+    let eventDetails =<Redirect to='/events/:id'><EventDetails handleClick={showEventDetails} id={id} user={user} date={date} setUser={setUser} img={img} title={title} description={description} policies={data} center={center} lat={lat} lng={lng} mapStyles={mapStyles}/></Redirect> 
 
     if(!data) return <div>loading...</div>
     //is this the right place to put match.params? yes i think so
@@ -56,7 +75,7 @@ function Event({user,id,setUser,title,img,description,starttime,endtime,date,cen
             {/* could change the line below to pass STATE through react routers as props below like the useLocation() example on this webpage: https://dev.to/finallynero/hooks-introduced-in-react-router-v5-1-7g8 */}
         <ProtectedRoute path = '/events/:id' id={eventId} loggedIn={user} user={user} component={EventDetails}></ProtectedRoute>
         
-        {details ? <EventDetails handleClick={showEventDetails} id={eventId} user={user} setUser={setUser} img={img} title={title} description={description} policies={data} center={center} lat={lat} lng={lng} mapStyles={mapStyles}/>
+        {details ? <EventDetails handleClick={showEventDetails} id={eventId} user={user} setUser={setUser} img={img} title={title} address={address} description={description} date={date} action1={action1} action2={action2} action3={action3} center={center} lat={lat} lng={lng} mapStyles={mapStyles}/>
         :
         <div className="event-card" style={style}>
             <div className="event-img-container">
@@ -77,6 +96,7 @@ function Event({user,id,setUser,title,img,description,starttime,endtime,date,cen
                     <p>{date}</p>
                 </div>
             </div>
+            <div>{cause}</div>
             {/* <div className="map-container">
                 <GMap 
                         initialCenter={center}

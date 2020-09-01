@@ -30,7 +30,7 @@ const App = () => {
     setUserInfo(data)
   },[user])
 
-  console.log(userInfo)
+  console.log(userInfo,data)
    
   return (
     <HashRouter>
@@ -45,7 +45,7 @@ const App = () => {
           <Route exact path='/EventCreator' component={EventCreator}></Route>
           
           <Route exact path='/EventFeedContainer'>
-            <EventFeedContainer user={user} setUser={setUser}/>
+            <EventFeedContainer user={user} userInfo={data} setUser={setUser}/>
           </Route>
           <Route path='/Survey'>
             <Survey onSubmit={() => setUserInfo(userInfo)} />

@@ -367,3 +367,23 @@ button:active {
   height:100%;
   border-radius: 50%;
 }
+
+/* Event Creator
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.event-creator {
+  margin-top:110px;
+}
+
+#event-creator-header {
+  margin-bottom:50px;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width:95%;
+  flex-wrap:wrap;
+  margin-left:2.5%;
+}
