@@ -8,6 +8,8 @@ import BlmActionsDropdowns from "./actions/BlmActionsDropdown"
 import EnvActionsDropdowns from "./actions/EnvActionsDropdown"
 import PolActionsDropdowns from "./actions/PolActionsDropdown"
 
+import Timekeeper from 'react-timekeeper';
+
 function EventCreator() {
     
     // useFetch('https://maps.googleapis.com/maps/api/js?key='+apiKey+'&libraries=places')
@@ -32,6 +34,9 @@ function EventCreator() {
         console.log(formData)
         fetchData(JSON.stringify(formData))
     }
+
+    const [startTime,setStartTime] = useState("01:00")
+    const [endTime,setEndTime] = useState("02:00")
     
     const key = "AIzaSyA-FD7UmxJXC2NjReClIbSv-BFjfELmqN4";
     let addressVal = formData.address
@@ -68,6 +73,9 @@ function EventCreator() {
                         <input type="text" name="title" placeholder="Title of Event"></input>
                         <input type="text" name="description" placeholder="In ten words or less..."></input>
                         {address}
+                        {/* <TimeKeeper 
+                            time={startTime}
+                        /> */}
                         <input type="text" name="startTime" placeholder="Start Time"></input>
                         <input type="text" name="endTime" placeholder="End Time"></input>
                         <input type="text" name="date" placeholder="Date"></input>

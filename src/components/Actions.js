@@ -28,12 +28,12 @@ function Actions({action1,action2,action3}) {
         setActionDetailsShowing(!actionDetailsShowing)
     }
 
-    console.log(whichAction)
+    console.log(whichAction.id)
     
     return (
         <div>
             <h3>Follow-Up Actions (?)</h3>
-            {actionDetailsShowing ? <ActionResources handleClick={openActionDetails} data={whichAction} /> : null}
+            {actionDetailsShowing ? <ActionResources handleClick={openActionDetails} actionId={whichAction.id} /> : null}
             <p onClick={openActionDetails}>{action1}</p>
             <p onClick={openActionDetails}>{action2}</p>
             <p onClick={openActionDetails}>{action3}</p>

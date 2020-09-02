@@ -1,36 +1,31 @@
-import React, {useState} from "react"
+import React,{useEffect,useState} from "react"
+import useFetch from "../../hooks/useFetch"
 import CauseIcon from "./CauseIcon"
 import Action from "./Action"
 import CommentFeed from "./CommentFeed"
-import {commentData} from "../../CommentData"
-import Comment from "./Comment"
+import AddLike from "./AddLike"
 
 
-function Post({postId,user,cause,action,points,postImg,postText,link}) {
+function Post({postId,user,username,cause,action,points,postImg,postText,link}) {
 
-    let [commentShow,setCommentShow] = useState(false)
+    const [loading,error,data,fetchData,setUrl] = useFetch(`/likes/${postId}`)
+  
+    useEffect(()=>{
+        if(!data){
+            fetchData()
+        }
+    },[])
 
-    let showComments = () => {
-        setCommentShow(!commentShow)
-        console.log(commentShow)
-        console.log(postId)
-    }
-
-    //for some reason comment.props.postId on line 19 is undefined/an empty array... 
-    // so I set the ref to equal the postId because the filter was reading info outside of the props (like 'key' and 'ref')
-    // but now the postId is a string and it throws a weird error where it's saying you can't have refs be strings
-    let allComments = commentData.map((comment,idx) => <Comment key={idx} ref={comment.postId} postId={comment.postId} userName={comment.username} comment={comment.comment}/>)
-    let filteredCommentsByPost = allComments.filter(comment => 
-        comment.props.postId === postId
-    )
-    console.log(allComments)
-    console.log(filteredCommentsByPost)
+    console.log(data)
+    
+    if(!data) return <div>loading...</div>
 
     return (
         <div className="main-feed">
-            <div className="feed-post-container" id={`post_${postId}`}>
+            <h3>Event Feed</h3>
+            <div className="feed-post-container" id={`${postId}`}>
                 <div className="feed-post-user-info-div">
-                    <p className="user-who-posted">{user}</p>
+                    <p className="user-who-posted">{username}</p>
                     <CauseIcon cause={cause} />
                 </div>
                 <div className="main-feed-img-container">
@@ -41,8 +36,8 @@ function Post({postId,user,cause,action,points,postImg,postText,link}) {
                     
                 </div>
                 <div className="feed-likes-div">
-                    <img src="like_icon.jpg" alt="like icon"/>
-                    <p className="num-likes">5</p>
+                    <AddLike user={user} postId={postId} numLikes={Number(data.count)} />
+                    
                     
                 </div>
                 <div className="main-feed-comment-feed">
@@ -50,15 +45,9 @@ function Post({postId,user,cause,action,points,postImg,postText,link}) {
                         <p><b>{user}</b></p>
                         <p>{postText}</p>
                     </div>
-                    {commentShow ? null : <button className="post-button" onClick={showComments}>Show Comments</button>}
-                    {commentShow ? <CommentFeed >{filteredCommentsByPost}</CommentFeed> : null}
+                    <CommentFeed postId={postId} />
                 </div>
-                <div className="feed-add-comment-div">
-                    <form className="feed-comment-form">
-                        <input className="feed-add-comment-box"></input>
-                        <button className="post-button">Comment</button>
-                    </form>
-                </div>
+                
             </div>
         </div>
     )

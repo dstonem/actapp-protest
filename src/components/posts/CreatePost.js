@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios"
 
 export default function App({event_id}) {
 
@@ -24,11 +25,20 @@ export default function App({event_id}) {
 
     const handleUpload = async e => {
         e.preventDefault();
-        // const uploadData = new FormData();
-        // uploadData.append("image", image.raw);
-        // uploadData.append("postText",formData.postText)
-        // console.log(uploadData.getAll("image"))
-        console.log(image.raw)
+        const uploadData = new FormData();
+        uploadData.append("image", image.raw);
+        uploadData.append("postText", formData.postText);
+        
+        // axios.post(`/addPost/${event_id}`, uploadData, {
+        //     url:'/images',
+        //     data:uploadData
+        // })
+        // .then(res => {
+        //     console.log(res.statusText)
+        // })
+
+        //how do we use the FileReader here to make sure the images go in the public folder (React)?
+        console.log(uploadData)
 
         await fetch(`/addPost/${event_id}`, {
         method: "POST",

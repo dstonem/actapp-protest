@@ -59,7 +59,7 @@ function EventDetails({user,setUser,userInfo,handleClick}) {
                 <p>Address: {data.location}</p>
 
                 <Actions action1={data.action1} action2={data.action2} action3={data.action3}/>
-            <EventPageFeed event_id={id.event_id}/>
+            <EventPageFeed user={user} event_id={id.event_id}/>
                 
             <Attendees user={user} id={data.id} setUser={setUser}/>
             

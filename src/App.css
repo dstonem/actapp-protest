@@ -391,3 +391,18 @@ button:active {
   flex-wrap:wrap;
   margin-left:2.5%;
 }
+
+
+/* Action Resources Container
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+.action-resources {
+  display:flex;
+  flex-direction: column;
+  background:#eee;
+  box-shadow: 2px 2px 2px #333;
+}
+
+.action-resources-org-info-container {
+  display:flex;
+  flex-direction: column;
+}
