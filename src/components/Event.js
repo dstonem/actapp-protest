@@ -1,15 +1,9 @@
 import React,{useState,useEffect} from "react"
+import Attendees from './Attendees'
 import {
-    Route,
-    NavLink,
-    HashRouter,
+    Link,
     Redirect
   } from "react-router-dom";
-import {useParams} from 'react-router'
-import useFetch from '../hooks/useFetch'
-import GMap from "./Map"
-import EventDetails from "./EventDetails"
-import ProtectedRoute from './ProtectedRoute'
 // import {addAttend,attendance,userAttending} from './Attendees'
 
 function Event({user,id,setUser,event:
@@ -17,76 +11,38 @@ function Event({user,id,setUser,event:
             pic,
             cause,
             title,
-            description,
             starttime,
             endtime,
             date,
-            center,
-            address,
-            lat,
-            lng,
-            attendees,
-            action1,
-            action2,
-            action3
+            action1
         }
     }) {
-    const img = pic
-    const [loading,error,data,fetchData,setUrl] = useFetch('/policies')
-  
-    useEffect(()=>{
-        if(!data){
-        fetchData()
-        }
-    },[])
     
-    //move these styles to the css file
-    const style = {
-        background:"linear-gradient(to bottom, #eee, #ABAEB3)",
-        backgroundRepeat:"no-repeat",
-        backgroundSize:"50%",
-        // backgroundZoom:"200%"
-    }
-
-    const mapStyles = {
-        width:"150px",
-        height:"150px",
-        borderRadius:"50%",
-        marginLeft:"15px"
-    }
-    
-    const [details,setDetails] = useState(false)
-    let [eventId,setEventId] = useState(id) 
+    let [eventId,setEventId] = useState(id)
 
     const showEventDetails = (evt) => {
-        setDetails(!details)
-        setEventId(id)
+        setEventId(evt.target.id)
         console.log(eventId)
+        // window.location = `/#/events/${eventId}`
+        //this is not very react-y but it works
+        // return (
+        //     <Redirect 
+        //       to={`/events/${eventId}`}
+        //     />
+        // )
     }
-    console.log(id)
-    
-       
-    let eventDetails =<Redirect to='/events/:id'><EventDetails handleClick={showEventDetails} id={id} user={user} date={date} setUser={setUser} img={img} title={title} description={description} policies={data} center={center} lat={lat} lng={lng} mapStyles={mapStyles}/></Redirect> 
 
-    if(!data) return <div>loading...</div>
-    //is this the right place to put match.params? yes i think so
     return (
-        <HashRouter>
-            {/* could change the line below to pass STATE through react routers as props below like the useLocation() example on this webpage: https://dev.to/finallynero/hooks-introduced-in-react-router-v5-1-7g8 */}
-        <ProtectedRoute path = '/events/:id' id={eventId} loggedIn={user} user={user} component={EventDetails}></ProtectedRoute>
-        
-        {details ? <EventDetails handleClick={showEventDetails} id={eventId} user={user} setUser={setUser} img={img} title={title} address={address} description={description} date={date} action1={action1} action2={action2} action3={action3} center={center} lat={lat} lng={lng} mapStyles={mapStyles}/>
-        :
-        <div className="event-card" style={style}>
+        <div className="event-card">
             <div className="event-img-container">
-                <img src={img} className="event-img" />
+                <img src={pic} className="event-img" />
             </div>
 
             <div className="event-card-title-container">
                 <h2>{title}</h2>
-                {/* <NavLink to='/events/:id'> */}
-                    <button onClick={showEventDetails}>Learn More & Attend</button>
-                {/* </NavLink> */}
+                <Link to={`/events/${eventId}`}>
+                    <button id={id} onClick={showEventDetails}>Learn More & Attend</button>
+                </Link>
             </div>
     
             <div className="event-info-container">
@@ -94,20 +50,15 @@ function Event({user,id,setUser,event:
                     {/* <p>{address}</p> */}
                     <p>{starttime} - {endtime}</p>
                     <p>{date}</p>
+                    <div>{cause}</div>
                 </div>
             </div>
-            <div>{cause}</div>
-            {/* <div className="map-container">
-                <GMap 
-                        initialCenter={center}
-                        styles={mapStyles}
-                        lat={lat}
-                        lng={lng}
-                />
-            </div> */}
-            
-        </div>}
-        </HashRouter>
+            <div className='map-container'>
+                <h3>Featured Followup Action</h3>
+                {action1}
+            </div>
+
+        </div>
     )
 }
 

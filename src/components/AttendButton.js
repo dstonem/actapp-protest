@@ -1,11 +1,12 @@
 import React, {useEffect,useState} from "react"
 import useFetch from '../hooks/useFetch'
 
-function AttendButton({eventId}){
+function AttendButton({eventId,user}){
     const [loading,error,data,fetchData,setUrl] = useFetch(`/addAttendee/${eventId}`)
-
+    
     const addAttend = () => {
         fetchData()
+        setUserAttending(true)
         console.log(eventId,data)
     }
 

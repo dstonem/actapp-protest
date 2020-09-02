@@ -1,5 +1,6 @@
 import React, { useEffect } from "react"
 import useFetch from '../hooks/useFetch'
+import {Redirect} from 'react-router'
 
 function Survey({onSubmit}) {
 
@@ -18,6 +19,11 @@ function Survey({onSubmit}) {
         console.log(event.target[2].value)
         //json form values
         fetchData(JSON.stringify({cause1:event.target[0].value,cause2:event.target[1].value,cause3:event.target[2].value}))
+        return (
+            <Redirect 
+                to={`/#/UserProfile`}
+            />
+        );
     }
 
     return (

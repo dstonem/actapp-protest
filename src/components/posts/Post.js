@@ -56,7 +56,7 @@ function Post({postId,user,cause,action,points,postImg,postText,link}) {
                 <div className="feed-add-comment-div">
                     <form className="feed-comment-form">
                         <input className="feed-add-comment-box"></input>
-                        <button className="post-button">Post</button>
+                        <button className="post-button">Comment</button>
                     </form>
                 </div>
             </div>
