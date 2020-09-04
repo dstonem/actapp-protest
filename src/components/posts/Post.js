@@ -6,7 +6,7 @@ import CommentFeed from "./CommentFeed"
 import AddLike from "./AddLike"
 
 
-function Post({postId,user,username,cause,action,points,postImg,postText,link}) {
+function Post({postId,user,username,cause,action,points,postImg,postText,link,currentUserInfo}) {
 
     const [loading,error,data,fetchData,setUrl] = useFetch(`/likes/${postId}`)
   
@@ -21,31 +21,30 @@ function Post({postId,user,username,cause,action,points,postImg,postText,link}) 
     if(!data) return <div>loading...</div>
 
     return (
-        <div className="main-feed">
-            <h3>Event Feed</h3>
+        <div className="">
             <div className="feed-post-container" id={`${postId}`}>
-                <div className="feed-post-user-info-div">
-                    <p className="user-who-posted">{username}</p>
-                    <CauseIcon cause={cause} />
+                <div className="post-user-and-cause-div">
+                    {cause === 'blm' ? <img src={'/images/icons/blm_icon.png'} width="35px" height="35px" /> : null}
+                    {cause === 'climate' ? <img src={'/images/icons/environment_icon.png'} width="35px" height="35px" /> : null}
+                    {cause === 'election' ? <img src={'/images/icons/election_icon.png'} width="35px" height="35px" /> : null}
+                    <p className="user-who-posted"><b>{username}</b></p>
                 </div>
                 <div className="main-feed-img-container">
                     <div className="feed-action-item-div">
                         {action ? <Action action={action} points={points}/> : null}
                     </div>
-                    <img src={postImg} alt={`post_${postId}`}/>
-                    
+                    <img src={postImg} alt={`post_${postId}`} className="post_img"/>
                 </div>
-                <div className="feed-likes-div">
-                    <AddLike user={user} postId={postId} numLikes={Number(data.count)} />
-                    
-                    
+                <div className="post-likes-container">
+                    <AddLike user={user} postId={postId} alreadyLiked={data[0]} numLikes={Number(data[1].count)} />
+                </div>
+                <div className="post-text">
+                    <p><b>{username}</b></p>
+                    <p>{postText}</p>
                 </div>
                 <div className="main-feed-comment-feed">
-                    <div className="post-text">
-                        <p><b>{user}</b></p>
-                        <p>{postText}</p>
-                    </div>
-                    <CommentFeed postId={postId} />
+                    
+                    <CommentFeed postId={postId} currentUserInfo={currentUserInfo}/>
                 </div>
                 
             </div>

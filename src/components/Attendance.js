@@ -28,10 +28,9 @@ function Attendance({id}) {
     },[data])
 
     if(!data) return <div>loading...</div>
-//{data[0].count >= 50 ? data[0].count : "<50"} <------ put in place of {data[0].count} three lines down
 
     return (
-        <h2>Attendance: {data.count}</h2>
+        <h4>Attendance: {data.count >= 50 ? data.count : "<50"}</h4>
     )
 }
 

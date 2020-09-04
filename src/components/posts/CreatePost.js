@@ -1,34 +1,40 @@
 import React, { useState } from "react";
 import axios from "axios"
+import Post from "./Post"
+import Upload from './Upload'
 
-export default function App({event_id}) {
+export default function App({ event_id, user, userInfo, eventFeedData }) {
 
     const [image, setImage] = useState({ preview: "", raw: "" });
-    const [formData,setFormData] = useState({})
+    const [formData, setFormData] = useState({})
 
     const handleImageChange = e => {
         if (e.target.files.length) {
-        setImage({
-            preview: URL.createObjectURL(e.target.files[0]),
-            raw: e.target.files[0]
-        });
+            setImage({
+                preview: URL.createObjectURL(e.target.files[0]),
+                raw: e.target.files[0]
+            });
         }
-        
+
     };
+
+    console.log(eventFeedData)
 
     const handleChange = (event) => {
         event.preventDefault()
         const { name, value, type, checked } = event.target
-        setFormData(formData => ({...formData, [name]: value}));
+        setFormData(formData => ({ ...formData, [name]: value }));
         console.log(formData.postText)
     }
 
+    let currentPost
+
     const handleUpload = async e => {
         e.preventDefault();
-        const uploadData = new FormData();
-        uploadData.append("image", image.raw);
-        uploadData.append("postText", formData.postText);
-        
+        // const uploadData = new FormData();
+        // uploadData.append("image", image.raw);
+        // uploadData.append("postText", formData.postText);
+
         // axios.post(`/addPost/${event_id}`, uploadData, {
         //     url:'/images',
         //     data:uploadData
@@ -38,46 +44,58 @@ export default function App({event_id}) {
         // })
 
         //how do we use the FileReader here to make sure the images go in the public folder (React)?
-        console.log(uploadData)
+        // console.log(uploadData)
 
-        await fetch(`/addPost/${event_id}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({picurl:`/images/${image.raw.lastModified}_${image.raw.name}`,body:formData.postText})
-        });
+        // await fetch(`/addPost/${event_id}`, {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify({ picurl: `/images/${image.raw.lastModified}_${image.raw.name}`, body: formData.postText })
+        // });
+
+        currentPost = { picurl: image.preview, body: formData.postText,postId:updateData.length}
+        console.log(currentPost) 
+        setUpdateData([...updateData, currentPost])
+        console.log(updateData)
     };
+
+    
+
+    const [updateData, setUpdateData] = useState(eventFeedData)
 
     return (
         <div>
+            
+            
+            <Upload />
             <form onChange={handleChange}>
-        <label htmlFor="upload-button">
-            {image.preview ? (
-            <img src={image.preview} alt="dummy" width="100%" height="100%" />
-            ) : (
-            <>
-                <span className="fa-stack fa-2x mt-3 mb-2">
-                <i className="fas fa-circle fa-stack-2x" />
-                <i className="fas fa-store fa-stack-1x fa-inverse" />
-                </span>
-                <img src='/images/icons/image-icon-2.jpg' width='50px' />
-                <h5 className="text-center">Upload your photo</h5>
-            </>
-            )}
-        </label>
-        <input
-            type="file"
-            id="upload-button"
-            style={{ display: "none" }}
-            onChange={handleImageChange}
-        />
-        <input name="postText"></input>
-        <br />
-        <button onClick={handleUpload}>Post</button>
+                <label htmlFor="upload-button">
+                    {image.preview ? (
+                        <img src={image.preview} alt="dummy" width="100%" height="100%" />
+                    ) : (
+                            <>
+                                <span className="fa-stack fa-2x mt-3 mb-2">
+                                    <i className="fas fa-circle fa-stack-2x" />
+                                    <i className="fas fa-store fa-stack-1x fa-inverse" />
+                                </span>
+                                <img src='/images/icons/image-icon-2.jpg' width='50px' />
+                                <h5 className="text-center">Upload your photo</h5>
+                            </>
+                        )}
+                </label>
+                <input
+                    type="file"
+                    id="upload-button"
+                    style={{ display: "none" }}
+                    onChange={handleImageChange}
+                />
+                <input name="postText"></input>
+                <br />
+                <button onClick={handleUpload}>Post</button>
 
-        </form>
+            </form>
         </div>
-        
+
     );
 }

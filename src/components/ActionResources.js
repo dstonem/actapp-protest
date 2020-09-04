@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react"
 import useFetch from '../hooks/useFetch'
 
-function ActionResources({handleClick,actionId}) {
+function ActionResources({handleClick,actionId,userInfo}) {
 
     const [loading,error,data,fetchData,setUrl] = useFetch(`/actions/resources/${actionId}`)
   
@@ -22,8 +22,8 @@ function ActionResources({handleClick,actionId}) {
     if(!data) return <div>loading...</div>
 
     //XXXXXXXXXXXXXXXXXXX get user's state and city
-    let city = ""
-    let state = ""
+    let city = userInfo.city
+    let state = userInfo.state
 
     return (
         <div className="action-resources">

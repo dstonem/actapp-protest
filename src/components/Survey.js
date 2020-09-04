@@ -1,16 +1,12 @@
-import React, { useEffect } from "react"
+import React, { useState } from "react"
 import useFetch from '../hooks/useFetch'
 import {Redirect} from 'react-router'
 
-function Survey({onSubmit}) {
+function Survey() {
 
     const [loading,error,data,fetchData,setUrl] = useFetch('/login/survey','POST')
 
-    // useEffect(()=>{
-    //     if(!data){
-    //         onSubmit(data)
-    //     }
-    // },[data])
+    const [submitted,setSubmitted] = useState(false)
 
     const submitForm  = (event) => {
         event.preventDefault()
@@ -19,16 +15,13 @@ function Survey({onSubmit}) {
         console.log(event.target[2].value)
         //json form values
         fetchData(JSON.stringify({cause1:event.target[0].value,cause2:event.target[1].value,cause3:event.target[2].value}))
-        return (
-            <Redirect 
-                to={`/#/UserProfile`}
-            />
-        );
+        setSubmitted(true)
     }
 
     return (
         <div className="survey-main-content">
             <form onSubmit={submitForm}>
+                {submitted ? <Redirect to="/UserProfile" /> : null} 
                 <div>
                     <h2 className="registertext">Pick up to Three Causes to Support</h2>
                 </div>

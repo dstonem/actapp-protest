@@ -1,18 +1,10 @@
 import React from "react"
 
 function Comment({userName,comment}) {
-    const style = {
-        fontWeight:"700",
-        margin:"10px"
-    }
-
-    const divStyle = {
-        display:"flex"
-    }
 
     return(
-        <div style={divStyle}>
-            <p style={style}>{userName}</p>
+        <div className="post-comment-container">
+            <p><b>{userName}</b></p>
             <p>{comment}</p>
         </div>
     )

@@ -10,7 +10,7 @@ const Attendees = ({handleClick,id,user,setUser}) => {
     const [userAttending,setUserAttending] = useState(false)
     
     return(
-        <div>
+        <div className="attendees-container">
             <Attendance id={id}/>
             <div className="event-details-button-div">
                 <Link to={`/EventFeed`}><button>Back to Events</button></Link>

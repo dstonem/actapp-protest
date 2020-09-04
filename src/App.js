@@ -1,15 +1,17 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import {eventData} from './eventData';
 import useFetch from './hooks/useFetch'
 import Header from './components/Header'
 import EventCreator from './components/EventCreator'
 import EventFeed from './components/EventFeed'
+import PostsFeed from './components/PostsFeed'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
 import './App.css';
 import UserProfile from './components/UserProfile';
 import Survey from './components/Survey'
 import EventDetails from './components/EventDetails'
+import Nav from './components/Nav'
 import {
   Route,
   NavLink,
@@ -19,49 +21,54 @@ import {
 import ProtectedRoute from './components/ProtectedRoute'
 
 const App = () => {
-  const [loading,error,data,fetchData,setUrl] = useFetch('/user')
-  
-  const [user,setUser] = useState(null)
-  const [userInfo,setUserInfo] = useState(null)
+  const [loading, error, data, fetchData, setUrl] = useFetch('/user')
 
-  useEffect(()=>{
-    if(!data && user){
+  const [user, setUser] = useState(null)
+  const [userInfo, setUserInfo] = useState(null)
+
+  useEffect(() => {
+    if (!data && user) {
       fetchData()
     }
     setUserInfo(data)
-  },[user])
+  }, [user])
 
-  console.log(userInfo,user,data)
-   
+  console.log(userInfo, user, data)
+
   return (
     <HashRouter>
       <div className="App">
         <Header />
         <div className="main">
           <Switch>
-          <Route exact path='/LoginForm'>
-            <LoginForm onLogIn={() => setUser(true)} user={user}/>
-          </Route>
-          
-          <Route exact path='/EventCreator' component={EventCreator}></Route>
-          
-          <Route exact path='/EventFeed'>
-            <EventFeed user={user} userInfo={data} setUser={setUser}/>
-          </Route>
+            <Route exact path='/LoginForm'>
+              <LoginForm onLogIn={() => setUser(true)} user={user} />
+            </Route>
 
-          <Route exact path="/events/:event_id">
-            <EventDetails user={user} setUser={setUser} userInfo={data}/>
-          </Route>
+            <ProtectedRoute exact path='/EventCreator' loggedIn={user} user={user} component={EventCreator}/>
 
-          <Route exact path='/Survey'>
-            <Survey onSubmit={() => setUserInfo(data)} />
-          </Route>
-          
-          <Route exact path='/RegisterForm' user={user} setUser={setUser} component={RegisterForm}></Route>
+            <Route exact path='/EventFeed'>
+              <EventFeed user={user} userInfo={data} setUser={setUser} />
+            </Route>
 
-          <ProtectedRoute exact path='/UserProfile' loggedIn={user} user={user} component={UserProfile}></ProtectedRoute>
+            <Route exact path='/PostsFeed'>
+              <PostsFeed user={user} userInfo={data} setUser={setUser} />
+            </Route>
+
+            <Route exact path="/events/:event_id">
+              <EventDetails user={user} setUser={setUser} userInfo={data} />
+            </Route>
+
+            <Route exact path='/Survey'>
+              <Survey onSubmit={() => setUserInfo(data)} />
+            </Route>
+
+            <Route exact path='/RegisterForm' user={user} setUser={setUser} component={RegisterForm}></Route>
+
+            <ProtectedRoute exact path='/UserProfile' loggedIn={user} user={user} userInfo={data} component={UserProfile}></ProtectedRoute>
           </Switch>
         </div>
+        <Nav />
       </div>
     </HashRouter>
   );
