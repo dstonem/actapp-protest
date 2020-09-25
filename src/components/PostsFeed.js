@@ -26,7 +26,7 @@ const PostsFeed = ({user,userInfo}) => {
 
     return (
         <div className="post-feed">
-            {user ? data.filter(filterByCause).map((post, idx) => <Post key={idx} postId={post.id} user={user} currentUserInfo={userInfo} username={post.username} postImg={post.picurl} postText={post.body} cause={post.causes} action={post.action} />).sort((a,b) => b.key - a.key) :data.map((post, idx) => <Post key={idx} postId={post.id} user={user} currentUserInfo={userInfo} username={post.username} postImg={post.picurl} postText={post.body} cause={post.causes} action={post.action} />).sort((a,b) => b.key - a.key)}
+            {user ? data.map((post, idx) => <Post key={idx} postId={post.id} user={user} currentUserInfo={userInfo} username={post.username} postImg={post.picurl} postText={post.body} cause={post.causes} action={post.action} />).sort((a,b) => b.key - a.key) :data.map((post, idx) => <Post key={idx} postId={post.id} user={user} currentUserInfo={userInfo} username={post.username} postImg={post.picurl} postText={post.body} cause={post.causes} action={post.action} />).sort((a,b) => b.key - a.key)}
         </div>
     )
 }
